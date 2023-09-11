@@ -1,5 +1,11 @@
 import './App.css';
 
+//hooks
+import { useState, useEffect } from 'react';
+
+//components
+import ChatListItem from './components/ChatListItem';
+
 //icons
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -7,6 +13,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 
 function App() {
+
+  const [chatList, setChatList] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},])
+
   return (
     <div className="App">
       <div className='sidebar'>
@@ -34,7 +43,13 @@ function App() {
               <input type='search' placeholder='procurar ou começar uma nova conversa'/>
           </div>
         </div>
-        <div className='chatlist'>...</div>
+        <div className='chatlist'>
+          {chatList.map((item, key) => (
+            <ChatListItem
+              key={key}
+            />
+          ))}
+        </div>
       </div>
       <div className='contentarea'>...</div>
     </div>
