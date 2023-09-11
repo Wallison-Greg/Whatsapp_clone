@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 
 //components
 import ChatListItem from './components/ChatListItem';
+import ChatIntro from './components/ChatIntro';
 
 //icons
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
@@ -21,7 +22,7 @@ function App() {
       <div className='sidebar'>
         <header>
 
-          <img className='header--avatar' src='https://pps.whatsapp.net/v/t61.24694-24/361328749_2611165299191006_5229913777978113971_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdQeLZ7dgTo06AVpNXXv0cfNVwxa_mznnusAMfbainY5ZA&oe=6504358C&_nc_cat=104'/>
+          <img className='header--avatar' src='https://pps.whatsapp.net/v/t61.24694-24/361328749_2611165299191006_5229913777978113971_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdQeLZ7dgTo06AVpNXXv0cfNVwxa_mznnusAMfbainY5ZA&oe=6504358C&_nc_cat=104' alt='perfil'/>
 
           <div className='header--buttons'>
             <div className='header--btn'>
@@ -51,7 +52,9 @@ function App() {
           ))}
         </div>
       </div>
-      <div className='contentarea'>...</div>
+      <div className='contentarea'>
+        <ChatIntro/>
+      </div>
     </div>
   );
 }
