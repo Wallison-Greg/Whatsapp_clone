@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 //components
 import ChatListItem from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
+import ChatWindow from './components/ChatWindow';
 
 //icons
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
@@ -15,7 +16,14 @@ import SearchIcon from '@mui/icons-material/Search';
 
 function App() {
 
-  const [chatList, setChatList] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},])
+  const [chatList, setChatList] = useState([
+    {chatId: 1, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
+    {chatId: 2, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
+    {chatId: 3, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
+    {chatId: 4, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'}
+    
+  ])
+  const [activeChat, setActiveChat] = useState({})
 
   return (
     <div className="App">
@@ -48,12 +56,19 @@ function App() {
           {chatList.map((item, key) => (
             <ChatListItem
               key={key}
+              active={activeChat.chatId === chatList[key].chatId}
+              onClick={() => setActiveChat(chatList[key])}
             />
           ))}
         </div>
       </div>
       <div className='contentarea'>
-        <ChatIntro/>
+        {activeChat.chatId !== undefined &&
+          <ChatWindow/>
+        }
+        {activeChat.chatId === undefined &&
+          <ChatIntro/>
+        }
       </div>
     </div>
   );

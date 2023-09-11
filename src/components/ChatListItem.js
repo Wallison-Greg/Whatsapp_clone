@@ -1,9 +1,9 @@
 import React from 'react'
 import './ChatListItem.css'
 
-const ChatListItem = () => {
+const ChatListItem = ({onClick, active}) => {
   return (
-    <div className='chatListItem'>
+    <div className={`chatListItem ${active ? 'active' : ''}`} onClick={onClick}>
         <img className='chatListItem--avatar' 
             src='https://pps.whatsapp.net/v/t61.24694-24/357988120_2050455628631822_5036220745889530610_n.jpg?ccb=11-4&oh=01_AdR1LNyQrRb06-aeApT75THBzSZfjuxQeHQdHKiVabhFvA&oe=650C1CA6&_nc_sid=000000&_nc_cat=107' 
             alt='julia'
