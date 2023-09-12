@@ -17,7 +17,11 @@ import SearchIcon from '@mui/icons-material/Search';
 function App() {
 
   const [chatList, setChatList] = useState([
-    {chatId: 1, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
+    {
+      chatId: 1, 
+      title: 'robson', 
+      img: 'https://w7.pngwing.com/pngs/900/441/png-transparent-avatar-face-man-boy-male-profile-smiley-avatar-icon.png'
+    },
     {chatId: 2, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
     {chatId: 3, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
     {chatId: 4, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'}
@@ -56,6 +60,7 @@ function App() {
           {chatList.map((item, key) => (
             <ChatListItem
               key={key}
+              data={item}
               active={activeChat.chatId === chatList[key].chatId}
               onClick={() => setActiveChat(chatList[key])}
             />

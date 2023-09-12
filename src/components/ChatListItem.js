@@ -1,16 +1,16 @@
 import React from 'react'
 import './ChatListItem.css'
 
-const ChatListItem = ({onClick, active}) => {
+const ChatListItem = ({onClick, active, data}) => {
   return (
     <div className={`chatListItem ${active ? 'active' : ''}`} onClick={onClick}>
         <img className='chatListItem--avatar' 
-            src='https://pps.whatsapp.net/v/t61.24694-24/357988120_2050455628631822_5036220745889530610_n.jpg?ccb=11-4&oh=01_AdR1LNyQrRb06-aeApT75THBzSZfjuxQeHQdHKiVabhFvA&oe=650C1CA6&_nc_sid=000000&_nc_cat=107' 
+            src={data.img}
             alt='julia'
         />
         <div className='chatListItem--lines'>
             <div className='chatListItem--line'>
-                <div className='chatListItem--name'>Amor S2</div>
+                <div className='chatListItem--name'>{data.title}</div>
                 <div className='chatListItem--date'>19:00</div>
             </div>
             <div className='chatListItem--line'>
