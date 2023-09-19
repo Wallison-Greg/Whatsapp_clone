@@ -39,6 +39,8 @@
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
+    overflow: hidden;
+    transition: all ease 0.3s;
 }
 .chatWindow--body{
     flex: 1;
@@ -47,6 +49,14 @@
     background-size: cover;
     background-position: center;
     background-image: url('https://i.redd.it/qwd83nc4xxf41.jpg');
+    padding: 20px 30px;
+}
+.chatWindow--body::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+}
+.chatWindow--body::-webkit-scrollbar-thumb{
+    background-color: rgba(0,0,0, 0.2);
 }
 .chatWindow--footer{
     display: flex;
@@ -55,6 +65,7 @@
 }
 .chatWindow--pre, .chatWindow--pos{
     display: flex;
+    margin: 0px 15px;
 }
 .chatWindow--inputArea{
     flex: 1;
@@ -69,4 +80,16 @@
     font-size: 15px;
     color: #4A4A4A;
     padding-left: 15px ;
+}
+.chatWindow--emojiArea{
+    height: 300px;
+    overflow-y: hidden;
+    transition: all ease 0.3s;
+}
+aside.EmojiPickerReact.epr-main{
+    background: none;
+    width: auto;
+}
+.EmojiPickerReact li.epr-emoji-category>.epr-emoji-category-label {
+    background: none;
 }

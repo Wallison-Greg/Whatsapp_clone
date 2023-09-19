@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import ChatListItem from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow';
+import NewChat from './components/NewChat';
 
 //icons
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
@@ -25,22 +26,37 @@ function App() {
     {chatId: 2, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
     {chatId: 3, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
     {chatId: 4, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'}
-    
   ])
-  const [activeChat, setActiveChat] = useState({})
+
+  const [activeChat, setActiveChat] = useState({});
+
+  const [user, setUser] = useState({
+    id: 1234, 
+    avatar: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png', 
+    name: 'wallison'
+  });
+
+  const [showNewChat, setShowNewChat] = useState(false);
+
+  const handleNewChat = () => {
+    setShowNewChat(true);
+  }
 
   return (
     <div className="App">
       <div className='sidebar'>
+
+        <NewChat show={showNewChat} setShow={setShowNewChat} user={user} chatList={chatList}/>
+
         <header>
 
-          <img className='header--avatar' src='https://pps.whatsapp.net/v/t61.24694-24/361328749_2611165299191006_5229913777978113971_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdQeLZ7dgTo06AVpNXXv0cfNVwxa_mznnusAMfbainY5ZA&oe=6504358C&_nc_cat=104' alt='perfil'/>
+          <img className='header--avatar' src={user.avatar} alt='perfil'/>
 
           <div className='header--buttons'>
             <div className='header--btn'>
               <DonutLargeIcon/>
             </div>
-            <div className='header--btn'>
+            <div onClick={handleNewChat} className='header--btn'>
               <ChatIcon/>
             </div>
             <div className='header--btn'>
@@ -69,7 +85,7 @@ function App() {
       </div>
       <div className='contentarea'>
         {activeChat.chatId !== undefined &&
-          <ChatWindow/>
+          <ChatWindow user={user}/>
         }
         {activeChat.chatId === undefined &&
           <ChatIntro/>
