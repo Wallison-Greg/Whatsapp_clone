@@ -19,7 +19,10 @@ import MicIcon from '@mui/icons-material/Mic';
 //components
 import MessageItem from './MessageItem';
 
-const ChatWindow = ({user}) => {
+//api
+import { onChatContant, sendMessage } from '../Api';
+
+const ChatWindow = ({user, data}) => {
 
   const body = useRef();
 
@@ -33,23 +36,18 @@ const ChatWindow = ({user}) => {
   const [emojiOpen, setEmojiOpen] = useState(false)
   const [text, setText] = useState("")
   const [listening, setListening] =  useState(false)
-  const [list, setList] = useState([
-    {author: 123, body: 'vai da certo crl'}, 
-    {author: 123, body: 'vai da '}, 
-    {author: 1234, body: 'vai da certo crl'},
-    {author: 123, body: 'vai da certo crl'}, 
-    {author: 123, body: 'vai da '}, 
-    {author: 1234, body: 'vai da certo crl'},
-    {author: 123, body: 'vai da certo crl'}, 
-    {author: 123, body: 'vai da '}, 
-    {author: 1234, body: 'vai da certo crl'},
-    {author: 123, body: 'vai da certo crl'}, 
-    {author: 123, body: 'vai da '}, 
-    {author: 1234, body: 'vai da certo crl'},
-    {author: 123, body: 'vai da certo crl'}, 
-    {author: 123, body: 'vai da '}, 
-    {author: 1234, body: 'vai da certo crl'}
-  ])
+  const [list, setList] = useState([])
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+
+    setList([]);
+
+    let unsub = onChatContant(data.chatId, setList, setUsers);
+
+    return unsub;
+
+  }, [data.chatId])
 
   useEffect(() => {
     if(body.current.scrollHeight > body.current.offsetHeight){
@@ -92,6 +90,18 @@ const ChatWindow = ({user}) => {
 
   const handleSendClick = () => {
 
+    if(text !== ''){
+      sendMessage(data, user.id, 'text', text, users);
+      setText('');
+      setEmojiOpen(false);
+    }
+
+  }
+
+  const handleKeyUp = (e) => {
+    if(e.keyCode === 13){
+      handleSendClick();
+    }
   }
 
   return (
@@ -100,8 +110,8 @@ const ChatWindow = ({user}) => {
       <div className='chatWindow--header'>
 
         <div className='chatWindow--headerInfo'>
-          <img className='chatWindow--avatar' src='https://cdn-icons-png.flaticon.com/512/4792/4792929.png' alt='teste'/>
-          <div className='chatWindow--name'>Robson</div>
+          <img className='chatWindow--avatar' src={data.image} alt='(-_-)'/>
+          <div className='chatWindow--name'>{data.title}</div>
         </div>
 
         <div className='chatWindow--headerButtons'>
@@ -154,6 +164,7 @@ const ChatWindow = ({user}) => {
             placeholder='Digite uma mensagem' 
             value={text} 
             onChange={e => setText(e.target.value)}
+            onKeyUp={handleKeyUp}
           />
         </div>
 

@@ -1,5 +1,8 @@
 import './App.css';
 
+//api
+import { addUser, onChatList } from './Api';
+
 //hooks
 import { useState, useEffect } from 'react';
 
@@ -8,6 +11,7 @@ import ChatListItem from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow';
 import NewChat from './components/NewChat';
+import Login from './components/Login';
 
 //icons
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
@@ -17,29 +21,41 @@ import SearchIcon from '@mui/icons-material/Search';
 
 function App() {
 
-  const [chatList, setChatList] = useState([
-    {
-      chatId: 1, 
-      title: 'robson', 
-      img: 'https://w7.pngwing.com/pngs/900/441/png-transparent-avatar-face-man-boy-male-profile-smiley-avatar-icon.png'
-    },
-    {chatId: 2, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
-    {chatId: 3, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'},
-    {chatId: 4, title: 'julia', img: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png'}
-  ])
+  const [chatList, setChatList] = useState([])
 
   const [activeChat, setActiveChat] = useState({});
 
-  const [user, setUser] = useState({
-    id: 1234, 
-    avatar: 'https://cdn-icons-png.flaticon.com/512/4792/4792929.png', 
-    name: 'wallison'
-  });
+  const [user, setUser] = useState(null);
 
   const [showNewChat, setShowNewChat] = useState(false);
 
+  useEffect(() => {
+
+    if(user !== null){
+      let unsub = onChatList(user.id, setChatList);
+      return unsub;
+    }
+
+  }, [user])
+
   const handleNewChat = () => {
     setShowNewChat(true);
+  }
+
+  const handleLoginData = async (u) => {
+    let newUser = {
+      id: u.uid,
+      name: u.displayName,
+      avatar: u.photoURL
+    }
+
+    await addUser(newUser)
+
+    setUser(newUser);
+  }
+
+  if(user === null) {
+    return (<Login onReceive={handleLoginData}/>)
   }
 
   return (
@@ -85,7 +101,7 @@ function App() {
       </div>
       <div className='contentarea'>
         {activeChat.chatId !== undefined &&
-          <ChatWindow user={user}/>
+          <ChatWindow user={user} data={activeChat}/>
         }
         {activeChat.chatId === undefined &&
           <ChatIntro/>
