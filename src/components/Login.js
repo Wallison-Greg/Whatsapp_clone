@@ -1,14 +1,16 @@
 import React from 'react'
 import './Login.css'
 
-import {auth, provider} from '../firebaseConfig'
-import { signInWithPopup } from 'firebase/auth'
+import {auth} from '../firebaseConfig'
+import { signInWithPopup, FacebookAuthProvider } from 'firebase/auth'
 
 const Login = ({onReceive}) => {
 
-    const handleLoginFaceboock = async () => {
+    const handleLoginFaceboock = () => {
 
-        await signInWithPopup(auth, provider).then((result) => {
+        const provider = new FacebookAuthProvider();
+
+        signInWithPopup(auth, provider).then((result) => {
             onReceive(result.user)
         }).catch((err) => {
             console.log(err)
